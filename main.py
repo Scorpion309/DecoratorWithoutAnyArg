@@ -1,7 +1,7 @@
-def get_args_for_decorator(*args, start):
+def get_args_for_decorator(start):
     def decorator(func):
-        def wrapper():
-            func(args, start)
+        def wrapper(*args):
+            func(args[start:])
 
         return wrapper
 
@@ -9,9 +9,9 @@ def get_args_for_decorator(*args, start):
 
 
 if __name__ == '__main__':
-    @get_args_for_decorator(1, 2, 3, 5, 6, start=3)
-    def args_without_first_arg(args, start):
-        print(args[start:])
+    @get_args_for_decorator(3)
+    def args_without_first_arg(args_from_decorator):
+        print(args_from_decorator)
 
 
-    args_without_first_arg()
+    args_without_first_arg(1, 2, 3, 4, 5, 6)
